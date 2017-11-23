@@ -1,7 +1,10 @@
 package com.skyisbule.sso.Controller;
 
 import com.skyisbule.sso.Model.User;
+import com.skyisbule.sso.Service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
+    @Autowired
+    LoginService service;
+
     //返回登录界面
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
@@ -19,7 +25,20 @@ public class LoginController {
 
     //处理登录
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String logining(User user){
+    public String logining(User user, @CookieValue("session")String session){
+        String telnum = user.getTelnum();
+        String passwd = user.getPasswd();
+        //处理登录
+        if (service.isTrueForTel(telnum,passwd)){
+            //激活session、存map
+
+            //生成ticket
+
+            //构造重定向URL
+            return "redirect:/";
+        }
+        //处理失败
+        return "error";
 
     }
 
