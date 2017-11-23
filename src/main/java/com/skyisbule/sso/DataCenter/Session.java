@@ -5,4 +5,5 @@ package com.skyisbule.sso.DataCenter;
  * 此类用于用户Session缓存、同步
  */
 public class Session {
+
 }
