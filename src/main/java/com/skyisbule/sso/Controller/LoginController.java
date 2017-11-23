@@ -1,7 +1,11 @@
 package com.skyisbule.sso.Controller;
 
+import com.skyisbule.sso.DataCenter.SessionCenter;
+import com.skyisbule.sso.DataCenter.TicketCenter;
 import com.skyisbule.sso.Model.ReqInfo;
 import com.skyisbule.sso.Model.User;
+import com.skyisbule.sso.Security.SkyTicketImp;
+import com.skyisbule.sso.Security.TicketHelper;
 import com.skyisbule.sso.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +22,17 @@ public class LoginController {
     @Autowired
     LoginService service;
 
+    //口令生成类
+    TicketHelper Ticket = null;
+    //ticke缓存中心
+    TicketCenter ticketCenter = new TicketCenter();
+    //session缓存中心
+    SessionCenter sessionCenter = new SessionCenter();
+
+    LoginController(){
+        this.Ticket = new SkyTicketImp();
+    }
+
     //返回登录界面
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
@@ -33,12 +48,16 @@ public class LoginController {
         String passwd = user.getPasswd();
         //处理登录
         if (service.isTrueForTel(telnum,passwd)){
-            //激活session、存map
-
+            User userSession = sessionCenter.getUser(session);
             //生成ticket
-
+            String ticket = Ticket.buildTicket();
+            //更新最后生成时间
+            userSession.setLastLoginTime(System.currentTimeMillis());
+            //存入缓存
+            ticketCenter.put(ticket,userSession);
+            String Redirect = "redirect:/"+reqInfo.getUrl()+"/api/login?ticket="+ticket;
             //构造重定向URL
-            return "redirect:/";
+            return Redirect;
         }
         //处理失败
         return "error";

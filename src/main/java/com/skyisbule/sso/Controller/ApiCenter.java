@@ -85,4 +85,12 @@ public class ApiCenter {
         response.addCookie(cookie);
     }
 
+    /**
+     * 第二个核心api  通过ticket返回相应内容
+     */
+    @RequestMapping("/api/ticket")
+    public User ticket(String ticket){
+        return ticketCenter.getUser(ticket);
+    }
+
 }

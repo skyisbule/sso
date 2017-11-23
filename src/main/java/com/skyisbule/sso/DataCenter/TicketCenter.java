@@ -15,4 +15,12 @@ public class TicketCenter {
     public void put(String Ticket,User user){
         TicketMap.put(Ticket,user);
     }
+
+    public User getUser(String ticket){
+        if (TicketMap.containsKey(ticket)){
+            return TicketMap.get(ticket);
+        }
+        return new User();
+    }
+
 }
