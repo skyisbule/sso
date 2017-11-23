@@ -1,5 +1,6 @@
 package com.skyisbule.sso.Controller;
 
+import com.skyisbule.sso.Model.ReqInfo;
 import com.skyisbule.sso.Model.User;
 import com.skyisbule.sso.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,9 @@ public class LoginController {
 
     //处理登录
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String logining(User user, @CookieValue("session")String session){
+    public String logining(User user,
+                           ReqInfo reqInfo,
+                           @CookieValue("session")String session){
         String telnum = user.getTelnum();
         String passwd = user.getPasswd();
         //处理登录
