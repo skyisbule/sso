@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * 此类用于控制用户登录行为，处理用户登录
  */
@@ -29,7 +32,7 @@ public class LoginController {
     //session缓存中心
     SessionCenter sessionCenter = new SessionCenter();
 
-    LoginController(){
+    LoginController() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         this.Ticket = new SkyTicketImp();
     }
 

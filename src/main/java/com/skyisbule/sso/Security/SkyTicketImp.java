@@ -1,15 +1,21 @@
 package com.skyisbule.sso.Security;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 /**
  * Created by skyisbule on 2017/11/23.
  * 一个加密算法的简单实现，以后再换
  */
-public class SkyTicketImp implements TicketHelper {
+public class SkyTicketImp implements TicketHelper{
 
-    private static MessageDigest md5;
+    public SkyTicketImp()throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        md5=MessageDigest.getInstance("MD5");
+    }
+
+    private static MessageDigest md5  ;
 
     @Override
     public String buildSession(){

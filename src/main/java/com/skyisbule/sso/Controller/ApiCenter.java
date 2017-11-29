@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -30,7 +32,7 @@ public class ApiCenter {
     //Ticket缓存
     TicketCenter ticketCenter = new TicketCenter();
 
-    private ApiCenter(){
+    private ApiCenter()throws NoSuchAlgorithmException, UnsupportedEncodingException {
         this.Ticket = new SkyTicketImp();
     }
 
@@ -49,7 +51,7 @@ public class ApiCenter {
         Cookie[] cookies = request.getCookies();
         //cookie不存在，生成cookie并重定向到登录界面
         if (cookies==null){
-            NotLogined(response);
+            //NotLogined(response);
             return "redirect:/login?url="+reqInfo.getUrl();
         }
 
@@ -83,6 +85,7 @@ public class ApiCenter {
         String session=Ticket.buildSession();
         Cookie cookie = new Cookie("session",session);
         response.addCookie(cookie);
+
     }
 
     /**
