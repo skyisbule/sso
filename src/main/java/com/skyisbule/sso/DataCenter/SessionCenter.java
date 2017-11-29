@@ -10,7 +10,7 @@ import java.util.Map;
  * 此类用于用户Session缓存、同步
  */
 public class SessionCenter {
-    public static Map<String,User> SessionMap= new HashMap<String,User>(16);
+    private static Map<String,User> SessionMap= new HashMap<String,User>(16);
 
     public void put(String session,User user){
         //如果已存在就清掉更新

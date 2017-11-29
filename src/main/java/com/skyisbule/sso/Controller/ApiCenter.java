@@ -51,7 +51,7 @@ public class ApiCenter {
         Cookie[] cookies = request.getCookies();
         //cookie不存在，生成cookie并重定向到登录界面
         if (cookies==null){
-            //NotLogined(response);
+            NotLogined(response);
             return "redirect:/login?url="+reqInfo.getUrl();
         }
 
@@ -75,9 +75,10 @@ public class ApiCenter {
             }
 
         }
-        //到这里表示登陆失败
+        //到这里表示登陆失败，重新生成session
         NotLogined(response);
-        return "重定向到登录界面";
+        //重定向到登录界面
+        return "redirect:/login?url="+reqInfo.getUrl();
     }
 
     //未登录或当前session失效，重新生成。
